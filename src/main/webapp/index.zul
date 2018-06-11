@@ -1,0 +1,95 @@
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm')@init('greenglobal.demo.MyViewModel')"
+		validationMessages="@id('vmsgs')">
+		<label value="Category : "></label>
+		<combobox model="@bind(vm.listCategory)"
+			onChange="@command('selected')"
+			selectedItem="@bind(vm.selectedCategory)">
+			<template name="model">
+				<comboitem label="@load(each.name)"></comboitem>
+			</template>
+		</combobox>
+		<hlayout>
+
+
+			<listbox model="@load(vm.listProduct)"
+				selectedItem="@bind(vm.selectedProduct)"
+				onSelect="@command('selectedSize')" hflex="1" mold="paging"
+				pageSize="5">
+				<listhead>
+					<listheader label="ID"></listheader>
+					<listheader label="Name"></listheader>
+					<listheader label="Price"></listheader>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.id)"></listcell>
+						<listcell label="@load(each.name)"></listcell>
+						<listcell label="@load(each.price)"></listcell>
+
+					</listitem>
+				</template>
+			</listbox>
+			<window hflex="1">
+				<label value="Size"></label>
+				<combobox model="@load(vm.listProductSize)"
+					selectedItem="@bind(vm.selectProductSize)">
+					<template name="model">
+						<comboitem label="@load(each.size)"></comboitem>
+					</template>
+				</combobox>
+				<label value="Quantity:"></label>
+				<label value="@load(vm.selectProductSize.quantity)"></label>
+				<image src="@load(vm.selectedProduct.image)"
+					width="220px" height="230px">
+				</image>
+			</window>
+		</hlayout>
+		<hlayout>
+			<grid hflex="1">
+				<columns>
+					<column label="ID"></column>
+					<column label="Name"></column>
+					<column label="Price"></column>
+					<column label="Ctrl"></column>
+				</columns>
+				<rows>
+					<row>
+						<label value="@load(vm.selectedProduct.id)"></label>
+						<textbox
+							value="@bind(vm.selectedProduct.name)">
+						</textbox>
+						<textbox
+							value="@bind(vm.selectedProduct.price)">
+						</textbox>
+						<button label="Save"
+							onClick="@command('addProduct')">
+						</button>
+					</row>
+				</rows>
+			</grid>
+			<grid hflex="1">
+				<columns>
+					<column label="Size"></column>
+					<column label="Quantity"></column>
+					<column label="Ctrl"></column>
+				</columns>
+				<rows>
+					<row>
+						<textbox
+							value="@bind(vm.selectProductSize.size)">
+						</textbox>
+						<textbox
+							value="@bind(vm.selectProductSize.quantity)">
+						</textbox>
+						<button onClick="@command('saveProductSize')"
+							label="Save"></button>
+					</row>
+				</rows>
+			</grid>
+		</hlayout>
+
+
+	</window>
+</zk>
